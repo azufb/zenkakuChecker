@@ -1,12 +1,24 @@
-import { action } from "commander";
-import React, { useState } from "react"
+import React, { useState } from "react";
 
 const Form:React.VoidFunctionComponent = () => {
   const [targetText, setTargetText] = useState<string>("");
-  const [checkedText, setCheckedText] = useState<string>("");
+  const [checkedText, setCheckedText] = useState<string | null | RegExpMatchArray>("");
 
   const handleSubmit = () => {
     // 正規表現を利用して、全角文字を検索。
+    const zenkaku = new RegExp('[０-９Ａ-Ｚａ-ｚ]', 'gim');
+    const result = targetText.match(zenkaku);
+
+    const ary: any = targetText.split(/\r\n|\n|\r/);
+    console.log(ary);
+
+    // forで回す必要ありそう。
+    if (result !== null) {
+      setCheckedText(result);
+      console.log(ary.indexOf(result[0]));
+    } else {
+      setCheckedText('全角数字・アルファベットは見つかりませんでした。');
+    }
   }
 
   return(
@@ -15,7 +27,10 @@ const Form:React.VoidFunctionComponent = () => {
         <label>チェックしたいテキスト：</label>
         <textarea typeof="text" value={targetText} onChange={(e) => setTargetText(e.target.value)} />
       </div>
-      <button>チェック！</button>
+      <button onClick={handleSubmit}>チェック！</button>
+      <div>
+        {checkedText}
+      </div>
     </div>
     
   )
