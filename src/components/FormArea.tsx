@@ -25,9 +25,9 @@ const Form:React.VoidFunctionComponent = () => {
     <div>
       <div>
         <label>チェックしたいテキスト：</label>
-        <textarea typeof="text" value={targetText} onChange={(e) => setTargetText(e.target.value)} />
+        <textarea typeof="text" value={targetText} onChange={(e) => setTargetText(e.target.value)} className="block rounded" />
       </div>
-      <button onClick={handleSubmit}>チェック！</button>
+      <button onClick={handleSubmit} className="bg-gray-300 rounded py-2 px-4 my-5 shadow-lg">チェック！</button>
       <div>
         {checkedText}
       </div>
